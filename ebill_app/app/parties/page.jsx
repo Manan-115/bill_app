@@ -4,22 +4,30 @@ import * as React from "react";
 import {
   Box,
   Typography,
+  IconButton,
   Chip,
   Avatar,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
+  Fab,
+  Button,
   Menu,
   MenuItem,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import LinkIcon from "@mui/icons-material/Link";
+import SettingsIcon from "@mui/icons-material/Settings";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import AddIcon from "@mui/icons-material/Add";
+import FolderSharedIcon from "@mui/icons-material/FolderShared";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ActionButtonsBar from "@/components/actions/ActionButtonsBar";
-import TopNavBar from "@/components/navigation/TopNavBar";
 
 export default function PartiesPage() {
-  const [activeTab, setActiveTab] = React.useState("collect");
+  const [activeTab, setActiveTab] = React.useState("pay");
   const [categoryAnchor, setCategoryAnchor] = React.useState(null);
   const [filterAnchor, setFilterAnchor] = React.useState(null);
 
@@ -39,13 +47,37 @@ export default function PartiesPage() {
       amount: 0,
       avatar: "K",
       color: "#E8F5E9",
-      hasIcon: true,
+      // hasIcon: true,
     },
   ];
 
   return (
     <Box sx={{ pb: 10, minHeight: "100vh", bgcolor: "#f6f7fb" }}>
-      <TopNavBar variant="parties" />
+      {/* Header */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          p: 2,
+          bgcolor: "white",
+        }}
+      >
+        <Typography variant="h6" sx={{ fontWeight: 600, color: "#2c2b38" }}>
+          Parties
+        </Typography>
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <IconButton size="small" sx={{ color: "#5a49e5" }}>
+            <SearchIcon />
+          </IconButton>
+          <IconButton size="small" sx={{ color: "#5a49e5" }}>
+            <LinkIcon />
+          </IconButton>
+          <IconButton size="small" sx={{ color: "#5a49e5" }}>
+            <SettingsIcon />
+          </IconButton>
+        </Box>
+      </Box>
 
       {/* Filter Tabs */}
       <Box
@@ -203,6 +235,19 @@ export default function PartiesPage() {
         ))}
       </List>
 
+      {/* Floating Action Buttons */}
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 90,
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          gap: 2,
+          alignItems: "center",
+          zIndex: 999,
+        }}
+      ></Box>
       <ActionButtonsBar variant="parties" />
     </Box>
   );
