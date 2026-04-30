@@ -1,3 +1,8 @@
+'use client';
+
+import ActionButtonsBar from '@/components/actions/ActionButtonsBar';
+import TopNavBar from '@/components/navigation/TopNavBar';
+
 export default function Home() {
   const metrics = [
     { value: '₹ 0', label: 'To Collect', tone: 'collect', trend: 'down' },
@@ -13,42 +18,7 @@ export default function Home() {
 
   return (
     <div className="screen">
-      <header className="top-bar">
-        <button className="business" type="button">
-          <span className="business-name">Business Name</span>
-          <span className="caret">v</span>
-        </button>
-        <div className="top-actions">
-          <button className="icon-button" type="button" aria-label="Calculator">
-            <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="4" y="3" width="16" height="18" rx="3" />
-              <rect x="7" y="6" width="10" height="3" rx="1" />
-              <circle className="icon-fill" cx="8.5" cy="13" r="1" />
-              <circle className="icon-fill" cx="12" cy="13" r="1" />
-              <circle className="icon-fill" cx="15.5" cy="13" r="1" />
-              <circle className="icon-fill" cx="8.5" cy="17" r="1" />
-              <circle className="icon-fill" cx="12" cy="17" r="1" />
-              <circle className="icon-fill" cx="15.5" cy="17" r="1" />
-            </svg>
-          </button>
-          <button className="icon-button" type="button" aria-label="Offers">
-            <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="4" y="8" width="16" height="12" rx="2" />
-              <path d="M4 12h16" />
-              <path d="M12 8v12" />
-              <path d="M7 8c0-2.2 2.2-3.8 5-1.3" />
-              <path d="M17 8c0-2.2-2.2-3.8-5-1.3" />
-            </svg>
-          </button>
-          <button className="icon-button" type="button" aria-label="Desktop view">
-            <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="3" y="5" width="18" height="12" rx="2" />
-              <path d="M8 19h8" />
-              <path d="M12 17v2" />
-            </svg>
-          </button>
-        </div>
-      </header>
+      <TopNavBar variant="dashboard" />
 
       <section className="metrics-grid">
         {metrics.map((metric) => (
@@ -115,10 +85,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="action-bar">
-        <button className="action-button dark" type="button">Received Payment</button>
-        <button className="action-button purple" type="button">+ Bill / Invoice</button>
-      </div>
+      <ActionButtonsBar variant="dashboard" />
     </div>
   );
 }

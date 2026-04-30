@@ -4,26 +4,19 @@ import * as React from "react";
 import {
   Box,
   Typography,
-  IconButton,
   Chip,
   Avatar,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Fab,
-  Button,
   Menu,
   MenuItem,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import LinkIcon from "@mui/icons-material/Link";
-import SettingsIcon from "@mui/icons-material/Settings";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import AddIcon from "@mui/icons-material/Add";
-import FolderSharedIcon from "@mui/icons-material/FolderShared";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import ActionButtonsBar from "@/components/actions/ActionButtonsBar";
+import TopNavBar from "@/components/navigation/TopNavBar";
 
 export default function PartiesPage() {
   const [activeTab, setActiveTab] = React.useState("collect");
@@ -52,31 +45,7 @@ export default function PartiesPage() {
 
   return (
     <Box sx={{ pb: 10, minHeight: "100vh", bgcolor: "#f6f7fb" }}>
-      {/* Header */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          p: 2,
-          bgcolor: "white",
-        }}
-      >
-        <Typography variant="h6" sx={{ fontWeight: 600, color: "#2c2b38" }}>
-          Parties
-        </Typography>
-        <Box sx={{ display: "flex", gap: 1 }}>
-          <IconButton size="small" sx={{ color: "#5a49e5" }}>
-            <SearchIcon />
-          </IconButton>
-          <IconButton size="small" sx={{ color: "#5a49e5" }}>
-            <LinkIcon />
-          </IconButton>
-          <IconButton size="small" sx={{ color: "#5a49e5" }}>
-            <SettingsIcon />
-          </IconButton>
-        </Box>
-      </Box>
+      <TopNavBar variant="parties" />
 
       {/* Filter Tabs */}
       <Box
@@ -234,67 +203,7 @@ export default function PartiesPage() {
         ))}
       </List>
 
-      {/* Floating Action Buttons */}
-      <Box
-        sx={{
-          position: "fixed",
-          bottom: 90,
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          gap: 2,
-          alignItems: "center",
-          zIndex: 999,
-        }}
-      >
-        <Button
-          variant="contained"
-          startIcon={<FolderSharedIcon />}
-          sx={{
-            bgcolor: "#2196F3",
-            color: "white",
-            borderRadius: 8,
-            px: 3,
-            py: 1.5,
-            textTransform: "none",
-            fontWeight: 600,
-            boxShadow: "0 4px 12px rgba(33, 150, 243, 0.4)",
-            "&:hover": { bgcolor: "#1976D2" },
-          }}
-        >
-          SharedLedgers
-        </Button>
-
-        <Fab
-          size="medium"
-          sx={{
-            bgcolor: "#424242",
-            color: "white",
-            "&:hover": { bgcolor: "#303030" },
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
-          }}
-        >
-          <CameraAltIcon />
-        </Fab>
-
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          sx={{
-            bgcolor: "#5a49e5",
-            color: "white",
-            borderRadius: 8,
-            px: 3,
-            py: 1.5,
-            textTransform: "none",
-            fontWeight: 600,
-            boxShadow: "0 4px 12px rgba(90, 73, 229, 0.4)",
-            "&:hover": { bgcolor: "#4335b8" },
-          }}
-        >
-           Party
-        </Button>
-      </Box>
+      <ActionButtonsBar variant="parties" />
     </Box>
   );
 }
