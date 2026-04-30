@@ -40,10 +40,11 @@ button {
 .screen {
   max-width: 520px;
   margin: 0 auto;
-  padding: 20px 18px 180px;
+  padding: 20px 18px 90px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-height: 100vh;
 }
 
 .top-bar {

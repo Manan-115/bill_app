@@ -11,56 +11,6 @@ export default function Home() {
     { title: 'Reports', subtitle: 'Sales, Party, GST...' },
   ];
 
-  const navItems = [
-    {
-      label: 'Dashboard',
-      active: true,
-      icon: (
-        <svg className="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 11.5L12 4l8 7.5" />
-          <path d="M6.5 10.5V20h11V10.5" />
-        </svg>
-      ),
-    },
-    {
-      label: 'Parties',
-      icon: (
-        <svg className="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="9" r="3" />
-          <path d="M5 20c1.6-3.2 12.4-3.2 14 0" />
-        </svg>
-      ),
-    },
-    {
-      label: 'Items',
-      icon: (
-        <svg className="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="4" y="4" width="7" height="7" rx="1.6" />
-          <rect x="13" y="4" width="7" height="7" rx="1.6" />
-          <rect x="4" y="13" width="7" height="7" rx="1.6" />
-        </svg>
-      ),
-    },
-    {
-      label: 'For You',
-      icon: (
-        <svg className="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 3l2.6 5.3 5.9.9-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.9z" />
-        </svg>
-      ),
-    },
-    {
-      label: 'More',
-      icon: (
-        <svg className="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <circle className="icon-fill" cx="6" cy="12" r="1.6" />
-          <circle className="icon-fill" cx="12" cy="12" r="1.6" />
-          <circle className="icon-fill" cx="18" cy="12" r="1.6" />
-        </svg>
-      ),
-    },
-  ];
-
   return (
     <div className="screen">
       <header className="top-bar">
@@ -167,22 +117,8 @@ export default function Home() {
 
       <div className="action-bar">
         <button className="action-button dark" type="button">Received Payment</button>
-        <button className="action-button plus" type="button" aria-label="Add">+</button>
         <button className="action-button purple" type="button">+ Bill / Invoice</button>
       </div>
-
-      <nav className="bottom-nav" aria-label="Bottom navigation">
-        {navItems.map((item) => (
-          <button
-            className={`nav-item ${item.active ? 'active' : ''}`}
-            type="button"
-            key={item.label}
-          >
-            {item.icon}
-            <span>{item.label}</span>
-          </button>
-        ))}
-      </nav>
     </div>
   );
 }

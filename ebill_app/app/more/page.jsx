@@ -1,3 +1,5 @@
+import BottomNav from '@/components/navigation/BottomNav';
+
 export default function MorePage() {
   return (
     <div className="screen">
