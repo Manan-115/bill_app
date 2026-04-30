@@ -1,9 +1,12 @@
-'use client';
+"use client";
 
+import { useState } from 'react';
 import ActionButtonsBar from '@/components/actions/ActionButtonsBar';
 import TopNavBar from '@/components/navigation/TopNavBar';
+import DashboardDrawer from '@/components/ui/DashboardDrawer';
 
 export default function Home() {
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const metrics = [
     { value: '₹ 0', label: 'To Collect', tone: 'collect', trend: 'down' },
     { value: '₹ 0', label: 'To Pay', tone: 'pay', trend: 'up' },
@@ -85,7 +88,14 @@ export default function Home() {
         </div>
       </section>
 
-      <ActionButtonsBar variant="dashboard" />
+      <ActionButtonsBar
+        variant="dashboard"
+        onAction={(key) => {
+          if (key === 'add') setDrawerOpen(true);
+        }}
+      />
+
+      <DashboardDrawer open={drawerOpen} setOpen={setDrawerOpen} />
     </div>
   );
 }

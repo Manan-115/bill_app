@@ -18,7 +18,7 @@ const fabBaseSx = {
   boxShadow: '0 6px 16px rgba(36, 34, 56, 0.2)',
 };
 
-export default function ActionButtonsBar({ variant, actions, containerSx }) {
+export default function ActionButtonsBar({ variant, actions, containerSx, onAction }) {
   const isCompact = useMediaQuery('(max-width:420px)');
   const resolved = actions ? { actions } : actionButtonConfigs[variant];
 
@@ -79,6 +79,7 @@ export default function ActionButtonsBar({ variant, actions, containerSx }) {
               key={action.key}
               size={isCompact ? 'small' : action.size || 'medium'}
               aria-label={action.ariaLabel || action.label}
+              onClick={() => onAction?.(action.key)}
               sx={{
                 bgcolor: action.color,
                 color: 'white',
@@ -99,6 +100,7 @@ export default function ActionButtonsBar({ variant, actions, containerSx }) {
             key={action.key}
             variant="contained"
             size={isCompact ? 'small' : 'medium'}
+            onClick={() => onAction?.(action.key)}
             startIcon={iconNode}
             sx={{
               bgcolor: action.color,
