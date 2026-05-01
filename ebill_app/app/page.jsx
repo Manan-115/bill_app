@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import ActionButtonsBar from '@/components/actions/ActionButtonsBar';
 import TopNavBar from '@/components/navigation/TopNavBar';
 import DashboardDrawer from '@/components/ui/DashboardDrawer';
 
 export default function Home() {
+  const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const metrics = [
     { value: '₹ 0', label: 'To Collect', tone: 'collect', trend: 'down' },
@@ -92,6 +94,7 @@ export default function Home() {
         variant="dashboard"
         onAction={(key) => {
           if (key === 'add') setDrawerOpen(true);
+          if (key === 'received') router.push('/payments/receive');
         }}
       />
 

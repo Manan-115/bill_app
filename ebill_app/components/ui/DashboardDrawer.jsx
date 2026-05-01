@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import {
   Drawer,
   DrawerContent,
@@ -21,6 +22,7 @@ import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export default function DashboardDrawer({ open, setOpen }) {
+  const router = useRouter();
   return (
     <Drawer open={open} onOpenChange={setOpen} className="bg-white !m-0">
       <DrawerContent>
