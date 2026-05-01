@@ -1,26 +1,47 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowLeft, User, Plus } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { ArrowLeft, User, Plus, Settings } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function RecordPaymentInPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [amount, setAmount] = useState('');
   const [paymentMode, setPaymentMode] = useState('Cash');
   const [showNote, setShowNote] = useState(false);
   const [note, setNote] = useState('');
+  const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [showDiscount, setShowDiscount] = useState(false);
   const [discount, setDiscount] = useState('');
 
   useEffect(() => {
     setIsVisible(true);
-  }, []);
+
+    const key = searchParams.get('key');
+    const shouldAutoLoad = key === 'received' || key === 'recieved' || key === 'bill';
+
+    if (shouldAutoLoad) {
+      setLoading(true);
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
+
+  const handleBack = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      router.back();
+    }, 300);
+  };
 
   return (
     <div 
-      className={`min-h-screen transition-transform duration-300 ease-out ${
+      className={`relative min-h-screen transition-transform duration-300 ease-out ${
         isVisible ? 'translate-x-0' : 'translate-x-full'
       }`}
       style={{ backgroundColor: '#f5f3ff' }}
@@ -28,7 +49,7 @@ export default function RecordPaymentInPage() {
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-3">
         <button 
-          onClick={() => router.back()}
+          onClick={handleBack}
           className="text-gray-700"
         >
           <ArrowLeft className="w-5 h-5" />
@@ -181,6 +202,13 @@ export default function RecordPaymentInPage() {
           </div>
         )}
       </div>
+
+      {loading && (
+        <div className="fixed inset-0 z-[70] flex flex-col items-center justify-center bg-gray-100/80 ">
+          <Settings className="h-12 w-12 text-blue-900 animate-spin" />
+          <p className="mt-4 text-blue-900">Preparing payment screen...</p>
+        </div>
+      )}
     </div>
   );
 }
