@@ -69,6 +69,11 @@ export const topNavConfigs = {
   },
   items: {
     title: 'Items',
+    titleType: 'menu',
+    containerSx: {
+      px: 2,
+      py: 2,
+    },
     actionSx: {
       bgcolor: 'transparent',
       boxShadow: 'none',
