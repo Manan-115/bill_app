@@ -29,6 +29,10 @@ export default function DashboardDrawer({ open, setOpen }) {
     setOpen(false);
     router.push('/create-bill');
   };
+  const handleReceivedPaymentClick = () => {
+    setOpen(false);
+    router.push('/payments/receive?key=received');
+  };
 
   return (
     <Drawer open={open} onOpenChange={setOpen} className="bg-white !m-0">
@@ -51,7 +55,7 @@ export default function DashboardDrawer({ open, setOpen }) {
           <div className="mt-4 grid grid-cols-4 gap-4 px-2">
             {[
               { icon: ReceiptLongIcon, label: 'Bill / Invoice', tone: 'green', action: handleBillInvoiceClick },
-              { icon: WalletIcon, label: 'Received Payment', tone: 'green' },
+              { icon: WalletIcon, label: 'Received Payment', tone: 'green', action: handleReceivedPaymentClick },
               { icon: AssignmentReturnIcon, label: 'Sales Return', tone: 'green' },
               { icon: DescriptionIcon, label: 'Credit Note', tone: 'green' },
               { icon: AddBoxIcon, label: 'Quotation/ Estimate', tone: 'green' },

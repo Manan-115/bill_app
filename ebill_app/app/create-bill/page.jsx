@@ -1,14 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, FileText, Camera, X } from "lucide-react";
+import { ArrowLeft, FileText, Camera, X, Settings } from "lucide-react";
 
 export default function CreateBillPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [showBanner, setShowBanner] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
@@ -19,7 +20,19 @@ export default function CreateBillPage() {
 
   useEffect(() => {
     setIsVisible(true);
-  }, []);
+
+    const key = searchParams.get("key");
+    const shouldAutoLoad = key === "received" || key === "recieved" || key === "bill";
+
+    if (shouldAutoLoad) {
+      setLoading(true);
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
 
   const handleBack = () => {
     setIsVisible(false);
@@ -42,19 +55,8 @@ export default function CreateBillPage() {
     });
   };
 
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-        <div className="animate-spin">
-          <div className="h-12 w-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
-        </div>
-        <p className="mt-4 text-gray-600 animate-fade-in">Processing your invoice...</p>
-      </div>
-    );
-  }
-
   return (
-    <div className={`min-h-screen bg-gray-50 pb-4 transition-transform duration-300 ease-out ${isVisible ? 'translate-x-0' : 'translate-x-full'}`}>
+    <div className={`relative min-h-screen bg-gray-50 pb-4 transition-transform duration-300 ease-out ${isVisible ? 'translate-x-0' : 'translate-x-full'}`}>
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white border-b border-gray-200 flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-2">
@@ -142,13 +144,20 @@ export default function CreateBillPage() {
           <h2 className="text-sm font-semibold text-gray-900">ITEMS</h2>
           <Button
             onClick={handleAddItems}
-            className="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 active:scale-95 transition-all py-6 font-semibold"
+            className="w-full bg-blue-100 text-blue-600 hover:bg-blue-100 active:scale-95 transition-all py-2 font-semibold rounded-md"
             variant="outline"
           >
             Add Items
           </Button>
         </div>
       </div>
+
+      {loading && (
+        <div className="fixed inset-0 z-[70] flex flex-col items-center justify-center bg-gray-100/80 ">
+          <Settings className="h-12 w-12 text-blue-900 animate-spin" />
+          <p className="mt-4 text-blue-900 animate-fade-in">Loading...</p>
+        </div>
+      )}
 
       <style jsx>{`
         @keyframes fadeIn {

@@ -94,8 +94,8 @@ export default function Home() {
         variant="dashboard"
         onAction={(key) => {
           if (key === 'add') setDrawerOpen(true);
-          if (key === 'received') router.push('/payments/receive');
-          if (key === 'bill') router.push('/create-bill');
+          if (key === 'received') router.push('/payments/receive?key=received');
+          if (key === 'bill') router.push('/create-bill?key=bill');
         }}
       />
 
