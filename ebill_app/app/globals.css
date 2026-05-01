@@ -32,6 +32,7 @@
 body {
   font-family: "Manrope", "Segoe UI", sans-serif;
   color: var(--ink);
+  background: var(--bg);
   min-height: 100svh;
   line-height: 1.5;
 }
@@ -96,51 +97,52 @@ button {
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
 }
 
 .metric-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px 16px;
+  border-radius: 14px;
+  padding: 10px 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: var(--shadow);
-  min-height: 84px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  min-height: 60px;
 }
 
 .metric-card.collect {
-  background: #eef8f1;
-  border-color: #cfead9;
+  background: #e8f5ec;
+  border-color: #d4ead9;
 }
 
 .metric-card.pay {
-  background: #fdeeee;
-  border-color: #f2c9c9;
+  background: #fdeaea;
+  border-color: #f5d4d4;
 }
 
 .metric-value {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
+  color: #2c2b38;
 }
 
 .metric-sub {
-  font-size: 13px;
+  font-size: 11px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-weight: 600;
 }
 
 .metric-card.collect .metric-sub {
-  color: var(--green);
+  color: #4caf50;
 }
 
 .metric-card.pay .metric-sub {
-  color: var(--red);
+  color: #ef5350;
 }
 
 .trend {
@@ -160,39 +162,42 @@ button {
 .tile-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
 }
 
 .tile-card {
-  background: var(--card);
-  border: 1px solid #dfe5f6;
-  border-radius: var(--radius);
-  padding: 14px 16px;
+  background: #e8f0f8;
+  border: 1px solid #c5d9ed;
+  border-radius: 14px;
+  padding: 10px 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: var(--shadow);
-  min-height: 84px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  min-height: 60px;
 }
 
 .tile-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 2px;
+  color: #2c2b38;
 }
 
 .tile-title.tile-value {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .tile-sub {
-  font-size: 12px;
-  color: var(--muted);
+  font-size: 11px;
+  color: #9ca3b8;
+  font-weight: 500;
 }
 
 .card-arrow {
-  font-size: 18px;
-  color: #b2b6c8;
+  font-size: 16px;
+  color: #c5c9d6;
+  font-weight: 400;
 }
 
 .recover-row {
@@ -200,28 +205,49 @@ button {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 12px 14px;
+  padding: 16px 18px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   box-shadow: var(--shadow);
   text-align: left;
+  overflow: hidden;
 }
 
 .recover-icon {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
-  background: #fff2d6;
-  color: #e19a2d;
+  background: #ffecd1;
+  color: #f5a623;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+.recover-icon .icon {
+  width: 24px;
+  height: 24px;
 }
 
 .recover-text {
   flex: 1;
+  font-size: 16px;
   font-weight: 600;
+  color: var(--ink);
+  animation: slideUp 0.5s ease-in-out;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .transactions {

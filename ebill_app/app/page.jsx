@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import ActionButtonsBar from '@/components/actions/ActionButtonsBar';
 import TopNavBar from '@/components/navigation/TopNavBar';
@@ -9,6 +9,21 @@ import DashboardDrawer from '@/components/ui/DashboardDrawer';
 export default function Home() {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  
+  const messages = [
+    'View unlimited reports',
+    'Recover Deleted Invoices',
+    'Backup your data now'
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
+    }, 2000);
+    
+    return () => clearInterval(interval);
+  }, []);
   const metrics = [
     { value: '₹ 0', label: 'To Collect', tone: 'collect', trend: 'down' },
     { value: '₹ 0', label: 'To Pay', tone: 'pay', trend: 'up' },
@@ -58,12 +73,13 @@ export default function Home() {
 
       <button className="recover-row" type="button">
         <span className="recover-icon" aria-hidden="true">
-          <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 8l4 3 4-6 4 6 4-3" />
-            <path d="M5 10l2 9h10l2-9" />
+          <svg className="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2L15 8L21 9L16.5 13.5L17.5 19.5L12 16.5L6.5 19.5L7.5 13.5L3 9L9 8L12 2Z" />
           </svg>
         </span>
-        <span className="recover-text">Recover Deleted Invoices</span>
+        <span className="recover-text" key={currentMessageIndex}>
+          {messages[currentMessageIndex]}
+        </span>
         <span className="card-arrow">&gt;</span>
       </button>
 
