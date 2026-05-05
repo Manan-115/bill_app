@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -11,22 +11,24 @@ export default function Home() {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
-  
+
   const { scrollY } = useScroll();
 
   // Smoothing the scroll-linked values
   const navOpacity = useTransform(scrollY, [0, 50], [1, 0]);
   const navY = useTransform(scrollY, [0, 50], [0, -20]);
-  
+
   const searchOpacity = useTransform(scrollY, [20, 80], [0, 1]);
   const searchY = useTransform(scrollY, [20, 80], [-20, 0]);
   const searchHeight = useTransform(scrollY, [0, 80], [0, 45]);
-  const searchScaleX = useTransform(scrollY, [20, 80], [0.1, 1]);
-  const sortScaleX = useTransform(scrollY, [20, 80], [0.1, 1]);
+  const searchX = useTransform(scrollY, [20, 80], [35, 0]);   // starts center-right, slides left
+  const sortX = useTransform(scrollY, [20, 80], [-130, 0]);   // starts center-left, slides right
 
   const dateOpacity = useTransform(scrollY, [60, 120], [0, 1]);
   const dateY = useTransform(scrollY, [60, 120], [-10, 10]);
   const dateHeight = useTransform(scrollY, [50, 120], [0, 62]);
+
+const columnMarginTop = useTransform(scrollY, [0, 60], [0, -40]);
 
   const filterOpacity = useTransform(scrollY, [100, 160], [0, 1]);
   const filterY = useTransform(scrollY, [100, 160], [-10, 0]);
@@ -36,7 +38,7 @@ export default function Home() {
 
   const metricsOpacity = useTransform(scrollY, [0, 80], [1, 0]);
   const metricsScale = useTransform(scrollY, [0, 80], [1, 0.9]);
-  
+
   const transactionsMarginTopInput = [0, 160];
   const transactionsMarginTopOutput = [4, -320];
   const transactionsMarginTop = useTransform(scrollY, transactionsMarginTopInput, transactionsMarginTopOutput, { clamp: true });
@@ -51,7 +53,7 @@ export default function Home() {
     const interval = setInterval(() => {
       setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
     }, 2000);
-    
+
     return () => clearInterval(interval);
   }, [messages.length]);
 
@@ -69,25 +71,28 @@ export default function Home() {
 
   return (
     <div className="screen bg-white">
-      <motion.div 
+      <motion.div
         className="sticky top-0 z-50 bg-white -mx-[18px] px-[18px] pt-4 overflow-hidden touch-none pointer-events-none"
         style={{ height: headerHeight }}
       >
-        <motion.div 
-          style={{ 
-            opacity: navOpacity, 
-            y: navY, 
-            pointerEvents: useTransform(scrollY, s => s > 40 ? "none" : "auto") 
+        <motion.div
+          style={{
+            opacity: navOpacity,
+            y: navY,
+            pointerEvents: useTransform(scrollY, s => s > 40 ? "none" : "auto")
           }}
         >
           <TopNavBar variant="dashboard" />
         </motion.div>
-        
-        <div className="flex flex-col pointer-events-auto">
+
+<motion.div 
+  className="flex flex-col pointer-events-auto"
+  style={{ marginTop: columnMarginTop }}
+>
           {/* Search and Sort Row */}
           <motion.div
-            style={{ 
-              opacity: searchOpacity, 
+            style={{
+              opacity: searchOpacity,
               y: searchY,
               height: searchHeight,
               marginTop: useTransform(scrollY, [0, 80], [0, 8])
@@ -95,21 +100,22 @@ export default function Home() {
             className="overflow-hidden"
           >
             <div className="flex items-center gap-2 mb-3">
-              <motion.div 
-                style={{ scaleX: searchScaleX, originX: 1 }}
+              <motion.div
+                style={{ x: searchX }}
                 className="flex-1 relative"
               >
+
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </span>
-                <input 
-                  type="text" 
-                  placeholder="Search party or invoice no." 
+                <input
+                  type="text"
+                  placeholder="Search party or invoice no."
                   className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm shadow-sm focus:outline-none focus:border-purple-500"
                 />
               </motion.div>
-              <motion.button 
-                style={{ scaleX: sortScaleX, originX: 0 }}
+              <motion.button
+                style={{ x: sortX }}
                 className="flex items-center gap-2 px-3 py-2 bg-[#2e2b4b] text-white rounded-lg text-sm font-semibold whitespace-nowrap shadow-md"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="17" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="13" y1="14" x2="3" y2="14"></line><line x1="9" y1="18" x2="3" y2="18"></line></svg>
@@ -120,23 +126,22 @@ export default function Home() {
 
           {/* Filter Chips Row */}
           <motion.div
-            style={{ 
-              opacity: filterOpacity, 
+            style={{
+              opacity: filterOpacity,
               y: filterY,
-              height: filterHeight 
+              height: filterHeight
             }}
             className="overflow-hidden"
           >
             <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 mb-2">
               {["All", "Sales", "Received Payment", "Sales Return"].map((filter, i) => (
-                <button 
-                  key={filter} 
+                <button
+                  key={filter}
                   style={{ borderWidth: '1.5px', borderStyle: 'solid' }}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium shadow-sm ${
-                    i === 0 
-                      ? "bg-[#f1edff] border-[#5a49e5] text-[#5a49e5]" 
-                      : "bg-white border-gray-200 text-gray-600"
-                  }`}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium shadow-sm ${i === 0
+                    ? "bg-[#f1edff] border-[#5a49e5] text-[#5a49e5]"
+                    : "bg-white border-gray-200 text-gray-600"
+                    }`}
                 >
                   {filter}
                 </button>
@@ -146,10 +151,10 @@ export default function Home() {
 
           {/* Date Picker Row */}
           <motion.div
-            style={{ 
-              opacity: dateOpacity, 
+            style={{
+              opacity: dateOpacity,
               y: dateY,
-              height: dateHeight 
+              height: dateHeight
             }}
             className="overflow-hidden"
           >
@@ -162,13 +167,13 @@ export default function Home() {
               <button className="text-sm font-bold text-[#5a49e5] uppercase">Change</button>
             </div>
           </motion.div>
-          
-          
-        </div>
+
+
+</motion.div>
       </motion.div>
 
       <motion.div
-        style={{ 
+        style={{
           opacity: metricsOpacity,
           scale: metricsScale,
         }}
@@ -217,7 +222,7 @@ export default function Home() {
         </button>
       </motion.div>
 
-      <motion.section 
+      <motion.section
         className="transactions bg-white -mx-[18px] px-[18px] pt-4 rounded-t-3xl min-h-[70vh] shadow-[0_-8px_30px_rgba(0,0,0,0.08)] relative z-10"
         style={{
           marginTop: transactionsMarginTop,
