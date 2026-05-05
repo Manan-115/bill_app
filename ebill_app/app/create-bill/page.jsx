@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -9,7 +9,6 @@ import { ArrowLeft, FileText, Camera, X, Settings } from "lucide-react";
 
 export default function CreateBillPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [showBanner, setShowBanner] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
@@ -21,6 +20,7 @@ export default function CreateBillPage() {
   useEffect(() => {
     setIsVisible(true);
 
+    const searchParams = new URLSearchParams(window.location.search);
     const key = searchParams.get("key");
     const shouldAutoLoad = key === "received" || key === "recieved" || key === "bill";
 
@@ -32,7 +32,7 @@ export default function CreateBillPage() {
 
       return () => clearTimeout(timer);
     }
-  }, [searchParams]);
+  }, []);
 
   const handleBack = () => {
     setIsVisible(false);

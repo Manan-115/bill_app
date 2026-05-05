@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { ArrowLeft, User, Plus, Settings } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function RecordPaymentInPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [amount, setAmount] = useState('');
   const [paymentMode, setPaymentMode] = useState('Cash');
   const [showNote, setShowNote] = useState(false);
@@ -19,6 +18,7 @@ export default function RecordPaymentInPage() {
   useEffect(() => {
     setIsVisible(true);
 
+    const searchParams = new URLSearchParams(window.location.search);
     const key = searchParams.get('key');
     const shouldAutoLoad = key === 'received' || key === 'recieved' || key === 'bill';
 
@@ -30,7 +30,7 @@ export default function RecordPaymentInPage() {
 
       return () => clearTimeout(timer);
     }
-  }, [searchParams]);
+  }, []);
 
   const handleBack = () => {
     setIsVisible(false);
