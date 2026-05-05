@@ -28,7 +28,7 @@ export default function Home() {
   const dateY = useTransform(scrollY, [60, 120], [-10, 10]);
   const dateHeight = useTransform(scrollY, [50, 120], [0, 62]);
 
-const columnMarginTop = useTransform(scrollY, [0, 60], [0, -40]);
+const columnMarginTop = useTransform(scrollY, [0, 60], [0, -70]);
 
   const filterOpacity = useTransform(scrollY, [100, 160], [0, 1]);
   const filterY = useTransform(scrollY, [100, 160], [-10, 0]);
@@ -264,3 +264,4 @@ const columnMarginTop = useTransform(scrollY, [0, 60], [0, -40]);
     </div>
   );
 } 
+r
