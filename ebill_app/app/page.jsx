@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useSnapScroll } from "@/lib/useSnapScroll";
 import ActionButtonsBar from "@/components/actions/ActionButtonsBar";
 import TopNavBar from "@/components/navigation/TopNavBar";
 import DashboardDrawer from "@/components/ui/DashboardDrawer";
@@ -11,37 +12,42 @@ export default function Home() {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  
+  const { scrollY, springScrollY } = useSnapScroll({
+    threshold: 80,
+    expandedValue: 0,
+    collapsedValue: 160
+  });
 
-  const { scrollY } = useScroll();
-
-  // Smoothing the scroll-linked values
-  const navOpacity = useTransform(scrollY, [0, 50], [1, 0]);
-  const navY = useTransform(scrollY, [0, 50], [0, -20]);
-
-  const searchOpacity = useTransform(scrollY, [20, 80], [0, 1]);
-  const searchY = useTransform(scrollY, [20, 80], [-20, 0]);
-  const searchHeight = useTransform(scrollY, [0, 80], [0, 45]);
+  // Smoothing the scroll-linked values using springScrollY for snap-to-state
+  const navOpacity = useTransform(springScrollY, [0, 50], [1, 0]);
+  const navY = useTransform(springScrollY, [0, 50], [0, -20]);
+  
+  const searchOpacity = useTransform(springScrollY, [20, 80], [0, 1]);
+  const searchY = useTransform(springScrollY, [20, 80], [-20, 0]);
+  const searchHeight = useTransform(springScrollY, [0, 80], [0, 45]);
   const searchX = useTransform(scrollY, [20, 80], [35, 0]);   // starts center-right, slides left
   const sortX = useTransform(scrollY, [20, 80], [-130, 0]);   // starts center-left, slides right
+  const searchScaleX = useTransform(springScrollY, [20, 80], [0.1, 1]);
+  const sortScaleX = useTransform(springScrollY, [20, 80], [0.1, 1]);
 
-  const dateOpacity = useTransform(scrollY, [60, 120], [0, 1]);
-  const dateY = useTransform(scrollY, [60, 120], [-10, 10]);
-  const dateHeight = useTransform(scrollY, [50, 120], [0, 62]);
+  const dateOpacity = useTransform(springScrollY, [60, 120], [0, 1]);
+  const dateY = useTransform(springScrollY, [60, 120], [-10, 10]);
+  const dateHeight = useTransform(springScrollY, [50, 120], [0, 62]);
 
-const columnMarginTop = useTransform(scrollY, [0, 60], [0, -70]);
+  const columnMarginTop = useTransform(scrollY, [0, 60], [0, -40]);
+  const filterOpacity = useTransform(springScrollY, [100, 160], [0, 1]);
+  const filterY = useTransform(springScrollY, [100, 160], [-10, 0]);
+  const filterHeight = useTransform(springScrollY, [90, 160], [0, 60]);
 
-  const filterOpacity = useTransform(scrollY, [100, 160], [0, 1]);
-  const filterY = useTransform(scrollY, [100, 160], [-10, 0]);
-  const filterHeight = useTransform(scrollY, [90, 160], [0, 60]);
+  const headerHeight = useTransform(springScrollY, [0, 160], [80, 240], { clamp: true });
 
-  const headerHeight = useTransform(scrollY, [0, 160], [80, 240], { clamp: true });
-
-  const metricsOpacity = useTransform(scrollY, [0, 80], [1, 0]);
-  const metricsScale = useTransform(scrollY, [0, 80], [1, 0.9]);
-
+  const metricsOpacity = useTransform(springScrollY, [0, 80], [1, 0]);
+  const metricsScale = useTransform(springScrollY, [0, 80], [1, 0.9]);
+  
   const transactionsMarginTopInput = [0, 160];
   const transactionsMarginTopOutput = [4, -320];
-  const transactionsMarginTop = useTransform(scrollY, transactionsMarginTopInput, transactionsMarginTopOutput, { clamp: true });
+  const transactionsMarginTop = useTransform(springScrollY, transactionsMarginTopInput, transactionsMarginTopOutput, { clamp: true });
 
   const messages = [
     "View unlimited reports",
@@ -158,7 +164,7 @@ const columnMarginTop = useTransform(scrollY, [0, 60], [0, -70]);
             }}
             className="overflow-hidden"
           >
-            <div className="flex items-center justify-between p-2.5 bg-white border border-gray-100 rounded-lg shadow-sm mb-3">
+            <div className="flex items-center justify-between p-2.5 bg-white border border-gray-200 rounded-lg shadow-sm mb-3">
               <div className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 <span>Last 365 Days</span>
