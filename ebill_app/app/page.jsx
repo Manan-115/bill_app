@@ -35,7 +35,7 @@ export default function Home() {
   const dateY = useTransform(springScrollY, [60, 120], [-10, 10]);
   const dateHeight = useTransform(springScrollY, [50, 120], [0, 62]);
 
-  const columnMarginTop = useTransform(scrollY, [0, 60], [0, -28]);
+  const columnMarginTop = useTransform(scrollY, [0, 60], [0, -10]);
   const filterOpacity = useTransform(springScrollY, [100, 160], [0, 1]);
   const filterY = useTransform(springScrollY, [100, 160], [-10, 0]);
   const filterHeight = useTransform(springScrollY, [90, 160], [0, 60]);
